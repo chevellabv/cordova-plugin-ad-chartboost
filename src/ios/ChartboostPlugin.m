@@ -164,15 +164,6 @@ static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b
 - (void) _setUp:(NSString *)appId anAppSignature:(NSString *)appSignature {
 	self.appId = appId;
 	self.appSignature = appSignature;
-
-	if (!validLicenseKey) {
-		if (arc4random() % 100 <= 1) {//0 ~ 99		
-			self.appId = TEST_APP_ID;
-			self.appSignature = TEST_APP_SIGNATURE;
-		}
-	}
-	
-	//
 	[Chartboost startWithAppId:self.appId appSignature:self.appSignature delegate:self];
 }
 
@@ -524,39 +515,68 @@ static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b
  * the reason of the failure
  */
 
+
 - (void) didFailToLoadRewardedVideo:(NSString *)location withError:(CBLoadError)error {
+	NSString*  errorMessage = @"Failed to load Rewarded Video, unknown error !";
+	NSNumber *errorCode = @-1;
     switch(error){
+
         case CBLoadErrorInternetUnavailable: {
-            NSLog(@"Failed to load Rewarded Video, no Internet connection !");
+            errorMessage = @"Failed to load Rewarded Video, no Internet connection !";
+            errorCode = @1;
+            // errorCode = CBLoadErrorInternetUnavailable;
         } break;
         case CBLoadErrorInternal: {
-            NSLog(@"Failed to load Rewarded Video, internal error !");
+            errorMessage = @"Failed to load Rewarded Video, internal error !";
+            errorCode = @0;
+             // errorCode = CBLoadErrorInternetUnavailable;
         } break;
         case CBLoadErrorNetworkFailure: {
-            NSLog(@"Failed to load Rewarded Video, network error !");
+            errorMessage = @"Failed to load Rewarded Video, network error !";
+            errorCode = @5;
         } break;
         case CBLoadErrorWrongOrientation: {
-            NSLog(@"Failed to load Rewarded Video, wrong orientation !");
+            errorMessage = @"Failed to load Rewarded Video, wrong orientation !";
+             errorCode = @3;
         } break;
         case CBLoadErrorTooManyConnections: {
-            NSLog(@"Failed to load Rewarded Video, too many connections !");
+            errorMessage = @"Failed to load Rewarded Video, too many connections !";
+             errorCode = @2;
         } break;
         case CBLoadErrorFirstSessionInterstitialsDisabled: {
-            NSLog(@"Failed to load Rewarded Video, first session !");
+            errorMessage = @"Failed to load Rewarded Video, first session !";
+             errorCode = @4;
         } break;
         case CBLoadErrorNoAdFound : {
-            NSLog(@"Failed to load Rewarded Video, no ad found !");
+            errorMessage = @"Failed to load Rewarded Video, no ad found !";
+             errorCode = @6;
         } break;
         case CBLoadErrorSessionNotStarted : {
-            NSLog(@"Failed to load Rewarded Video, session not started !");
+            errorMessage = @"Failed to load Rewarded Video, session not started !";
+             errorCode = @7;
         } break;
         case CBLoadErrorNoLocationFound : {
-            NSLog(@"Failed to load Rewarded Video, missing location parameter !");
+            errorMessage = @"Failed to load Rewarded Video, missing location parameter !";
+             errorCode = @11;
         } break;
-        default: {
-            NSLog(@"Failed to load Rewarded Video, unknown error !");
-        }
     }
+
+	NSMutableDictionary* result = [NSMutableDictionary dictionary];
+	[result setValue:@"onRewardedVideoAdFailedToLoad" forKey:@"event"];
+	[result setValue:location forKey:@"message"];
+
+	NSMutableDictionary *err = [NSMutableDictionary dictionary];
+	[err setValue:errorCode forKey:@"code"];
+	[err setValue:errorMessage forKey:@"message"];
+
+	[result setValue:err forKey:@"error"];
+
+
+
+	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+	[pr setKeepCallbackAsBool:YES];
+	[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
+
 }
 
 - (BOOL) shouldDisplayRewardedVideo:(CBLocation)location {
@@ -581,6 +601,14 @@ static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b
 
 - (void) didClickRewardedVideo:(CBLocation)location {
 	NSLog(@"%@", @"didClickRewardedVideo");
+		NSDictionary* result = @{
+		@"event":@"onRewardedVideoAdClick",
+		@"message":location
+	};	
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onRewardedVideoAdShown"];
+	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+	[pr setKeepCallbackAsBool:YES];
+	[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
 }
 
 - (void) didCloseRewardedVideo:(CBLocation)location {

@@ -349,14 +349,7 @@ public class ChartboostPlugin extends CordovaPlugin {
 	private void _setUp(String appId, String appSignature) {
 		this.appId = appId;
 		this.appSignature = appSignature;
-		
-		if (!validLicenseKey) {
-			if (new Random().nextInt(100) <= 1) {//0~99					
-				this.appId = TEST_APP_ID;
-				this.appSignature = TEST_APP_SIGNATURE;
-			}
-		}
-		
+				
 		Chartboost.startWithAppId(cordova.getActivity(), this.appId , this.appSignature);
 		Chartboost.setLoggingLevel(Level.ALL);		
 		Chartboost.onCreate(cordova.getActivity());
@@ -660,6 +653,23 @@ public class ChartboostPlugin extends CordovaPlugin {
 		@Override
 		public void didFailToLoadRewardedVideo(String location,	CBImpressionError error) {
 			Log.d(LOG_TAG, "didFailToLoadRewardedVideo: " + (location != null ? location : "null")+ ", "+ error.name());			
+		
+	
+			JSONObject result = new JSONObject();
+			try {
+				result.put("event", "onRewardedVideoAdFailedToLoad");
+				result.put("message", location);
+				JSONObject err = new JSONObject();
+				err.put("code", error.ordinal());
+				err.put("message", error.name());
+				result.put("error", err);
+			}
+			catch(JSONException ex){
+			}			
+			//PluginResult pr = new PluginResult(PluginResult.Status.OK, "onRewardedVideoAdLoaded");
+			PluginResult pr = new PluginResult(PluginResult.Status.OK, result);
+			pr.setKeepCallback(true);
+			callbackContextKeepCallback.sendPluginResult(pr);
 		}
 		
 		@Override
@@ -692,6 +702,17 @@ public class ChartboostPlugin extends CordovaPlugin {
 		@Override
 		public void didClickRewardedVideo(String location) {
 			Log.d(LOG_TAG, "didClickRewardedVideo: " + (location != null ? location : "null"));
+			JSONObject result = new JSONObject();
+			try {
+				result.put("event", "onRewardedVideoAdClick");
+				result.put("message", location);
+			}
+			catch(JSONException ex){
+			}			
+			//PluginResult pr = new PluginResult(PluginResult.Status.OK, "onRewardedVideoAdShown");
+			PluginResult pr = new PluginResult(PluginResult.Status.OK, result);
+			pr.setKeepCallback(true);
+			callbackContextKeepCallback.sendPluginResult(pr);
 		}
 		
 		@Override

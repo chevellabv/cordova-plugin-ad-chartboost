@@ -21,130 +21,20 @@ module.exports = {
 		var self = this;	
         cordova.exec(
 			function (result) {
-				console.log('setUp succeeded.');
-				
-				if (typeof result == "string") {
-/*				
-					if (result == "onInterstitialAdPreloaded") {
-					
-//cranberrygame start; deprecated					
-						if (self.onFullScreenAdPreloaded)
-							self.onFullScreenAdPreloaded();
-//cranberrygame end							
-						if (self.onInterstitialAdPreloaded)
-							self.onInterstitialAdPreloaded();
-					}
-					else if (result == "onInterstitialAdLoaded") {
-						self._loadedInterstitialAd = true;
-
-//cranberrygame start; deprecated						
-						if (self.onFullScreenAdLoaded)
-							self.onFullScreenAdLoaded();
-//cranberrygame end						
-						if (self.onInterstitialAdLoaded)
-							self.onInterstitialAdLoaded();
-					}
-					else if (result == "onInterstitialAdShown") {
-						self._loadedInterstitialAd = false;						
-						self._isShowingInterstitialAd = true;
-					
-//cranberrygame start; deprecated					
-						if (self.onFullScreenAdShown)
-							self.onFullScreenAdShown();
-//cranberrygame end						
-						if (self.onInterstitialAdShown)
-							self.onInterstitialAdShown();
-					}
-					else if (result == "onInterstitialAdHidden") {
-						self._isShowingInterstitialAd = false;
-					
-//cranberrygame start; deprecated					
-						 if (self.onFullScreenAdHidden)
-							self.onFullScreenAdHidden();
-//cranberrygame end							
-						 if (self.onInterstitialAdHidden)
-							self.onInterstitialAdHidden();
-					}
-					//
-					else if (result == "onMoreAppsAdPreloaded") {
-						if (self.onMoreAppsAdPreloaded)
-							self.onMoreAppsAdPreloaded();
-					}
-					else if (result == "onMoreAppsAdLoaded") {
-						self._loadedMoreAppsAd = true;
-						
-						if (self.onMoreAppsAdLoaded)
-							self.onMoreAppsAdLoaded();
-					}
-					else if (result == "onMoreAppsAdShown") {
-						self._loadedMoreAppsAd = false;
-						self._isShowingMoreAppsAd = true;
-					
-						if (self.onMoreAppsAdShown)
-							self.onMoreAppsAdShown();
-					}
-					else if (result == "onMoreAppsAdHidden") {
-						self._isShowingMoreAppsAd = false;
-					
-						 if (self.onMoreAppsAdHidden)
-							self.onMoreAppsAdHidden();
-					}
-					//
-					else if (result == "onRewardedVideoAdPreloaded") {
-						if (self.onRewardedVideoAdPreloaded)
-							self.onRewardedVideoAdPreloaded();
-					}
-					else if (result == "onRewardedVideoAdLoaded") {
-						self._loadedRewardedVideoAd = true;
-
-						if (self.onRewardedVideoAdLoaded)
-							self.onRewardedVideoAdLoaded();
-					}
-					else if (result == "onRewardedVideoAdShown") {
-						self._loadedRewardedVideoAd = false;
-						self._isShowingRewardedVideoAd = true;
-					
-						if (self.onRewardedVideoAdShown)
-							self.onRewardedVideoAdShown();
-					}
-					else if (result == "onRewardedVideoAdHidden") {
-						self._isShowingRewardedVideoAd = false;
-					
-						 if (self.onRewardedVideoAdHidden)
-							self.onRewardedVideoAdHidden();
-					}
-					else if (result == "onRewardedVideoAdCompleted") {
-						if (self.onRewardedVideoAdCompleted)
-							self.onRewardedVideoAdCompleted();
-					}
-*/					
-				}
-				else {
-					//var event = result["event"];
-					//var location = result["message"];				
-					//if (event == "onXXX") {
-					//	if (self.onXXX)
-					//		self.onXXX(location);
-					//}
-					
+				if (typeof result !== "string") {					
 					var event = result["event"];
-					var location = result["message"];					
-					if (event == "onInterstitialAdPreloaded") {
-					
-//cranberrygame start; deprecated					
+					var location = result["message"];	
+					var error = result["error"];				
+					if (event == "onInterstitialAdPreloaded") {					
 						if (self.onFullScreenAdPreloaded)
-							self.onFullScreenAdPreloaded(location);
-//cranberrygame end							
+							self.onFullScreenAdPreloaded(location);			
 						if (self.onInterstitialAdPreloaded)
 							self.onInterstitialAdPreloaded(location);
 					}
 					else if (event == "onInterstitialAdLoaded") {
-						self._loadedInterstitialAd = true;
-
-//cranberrygame start; deprecated						
+						self._loadedInterstitialAd = true;					
 						if (self.onFullScreenAdLoaded)
-							self.onFullScreenAdLoaded(location);
-//cranberrygame end						
+							self.onFullScreenAdLoaded(location);					
 						if (self.onInterstitialAdLoaded)
 							self.onInterstitialAdLoaded(location);
 					}
@@ -203,6 +93,18 @@ module.exports = {
 
 						if (self.onRewardedVideoAdLoaded)
 							self.onRewardedVideoAdLoaded(location);
+					}
+					else if (event == "onRewardedVideoAdClick") {
+						if (self.onRewardedVideoAdClick)
+							self.onRewardedVideoAdClick(location);
+					}
+					else if (event == "onRewardedVideoAdClick") {
+						if (self.onRewardedVideoAdClick)
+							self.onRewardedVideoAdClick(location);
+					}
+					else if (event == 'onRewardedVideoAdFailedToLoad') {
+						if (self.onRewardedVideoAdFailedToLoad)
+							self.onRewardedVideoAdFailedToLoad(location, error);
 					}
 					else if (event == "onRewardedVideoAdShown") {
 						self._loadedRewardedVideoAd = false;
