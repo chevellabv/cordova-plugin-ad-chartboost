@@ -346,6 +346,124 @@ static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b
 	//[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
 }
 
+//---------------------------
+
+- (void) didCacheMoreApps:(CBLocation)location {
+	NSLog(@"%@", @"didCacheMoreApps");
+	
+	if(moreAppsAdPreload) {
+		NSDictionary* result = @{
+			@"event":@"onMoreAppsAdPreloaded",
+			@"message":location
+		};		
+		//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onMoreAppsAdPreloaded"];
+		CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+		[pr setKeepCallbackAsBool:YES];
+		[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
+		//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+		//[pr setKeepCallbackAsBool:YES];
+		//[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];			
+	}
+	
+	NSDictionary* result = @{
+		@"event":@"onMoreAppsAdLoaded",
+		@"message":location
+	};		
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onMoreAppsAdLoaded"];
+	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+	[pr setKeepCallbackAsBool:YES];
+	[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+	//[pr setKeepCallbackAsBool:YES];
+	//[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
+}
+
+- (void) didFailToLoadMoreApps:(CBLoadError)error {
+    switch(error){
+        case CBLoadErrorInternetUnavailable: {
+            NSLog(@"Failed to load More Apps, no Internet connection !");
+        } break;
+        case CBLoadErrorInternal: {
+            NSLog(@"Failed to load More Apps, internal error !");
+        } break;
+        case CBLoadErrorNetworkFailure: {
+            NSLog(@"Failed to load More Apps, network error !");
+        } break;
+        case CBLoadErrorWrongOrientation: {
+            NSLog(@"Failed to load More Apps, wrong orientation !");
+        } break;
+        case CBLoadErrorTooManyConnections: {
+            NSLog(@"Failed to load More Apps, too many connections !");
+        } break;
+        case CBLoadErrorFirstSessionInterstitialsDisabled: {
+            NSLog(@"Failed to load More Apps, first session !");
+        } break;
+        case CBLoadErrorNoAdFound: {
+            NSLog(@"Failed to load More Apps, Apps not found !");
+        } break;
+        case CBLoadErrorSessionNotStarted : {
+            NSLog(@"Failed to load More Apps, session not started !");
+        } break;
+        default: {
+            NSLog(@"Failed to load More Apps, unknown error !");
+        }
+    }
+}
+
+- (BOOL) shouldDisplayMoreApps:(CBLocation)location {
+    return YES;
+}
+
+- (void) didDisplayMoreApps:(CBLocation)location {
+	NSLog(@"%@", @"didDisplayMoreApps");
+	
+	NSDictionary* result = @{
+		@"event":@"onMoreAppsAdShown",
+		@"message":location
+	};	
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onMoreAppsAdShown"];
+	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+	[pr setKeepCallbackAsBool:YES];
+	[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+	//[pr setKeepCallbackAsBool:YES];
+	//[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
+}
+
+- (void) didClickMoreApps:(CBLocation)location {
+	NSLog(@"%@", @"didClickMoreApps");
+}
+
+- (void) didCloseMoreApps:(CBLocation)location {
+	NSLog(@"%@", @"didCloseMoreApps");
+}
+
+/*
+ * didDismissMoreApps
+ *
+ * This is called when the more apps page is dismissed
+ *
+ * Is fired on:
+ * - More Apps click
+ * - More Apps close
+ *
+ */
+
+- (void) didDismissMoreApps:(NSString *)location {
+	NSLog(@"%@", @"didDismissMoreApps");
+	
+	NSDictionary* result = @{
+		@"event":@"onMoreAppsAdHidden",
+		@"message":location
+	};	
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onMoreAppsAdHidden"];
+	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+	[pr setKeepCallbackAsBool:YES];
+	[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+	//[pr setKeepCallbackAsBool:YES];
+	//[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
+}
 
 //---------------------------
 
@@ -356,6 +474,9 @@ static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b
  @discussion Implement to be notified of when the prefetching process has finished successfully.
  */
 
+- (void) didPrefetchVideos {
+	NSLog(@"%@", @"didPrefetchVideos");
+}
 
 - (void) didCacheRewardedVideo:(CBLocation)location {
 	NSLog(@"%@", @"didCacheRewardedVideo");
