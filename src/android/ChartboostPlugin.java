@@ -389,13 +389,8 @@ public class ChartboostPlugin extends CordovaPlugin {
 
 	private void _showRewardedVideoAd(String location) {
 		rewardedVideoAdPreload = false;
-		
-		if (Chartboost.hasRewardedVideo(location) {
-		    Chartboost.showRewardedVideo(location);
-		} else {
-		    Chartboost.cacheRewardedVideo(location);
-		    Chartboost.showRewardedVideo(location);
-		}
+		Chartboost.cacheRewardedVideo(location);
+		Chartboost.showRewardedVideo(location);
 	}
 	
 	class MyChartboostDelegate extends ChartboostDelegate {
