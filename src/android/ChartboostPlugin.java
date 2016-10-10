@@ -355,7 +355,6 @@ public class ChartboostPlugin extends CordovaPlugin {
 		Chartboost.onCreate(cordova.getActivity());
 		Chartboost.onStart(cordova.getActivity());
 		Chartboost.setDelegate(new MyChartboostDelegate());
-		Chartboost.setAutoCacheAds(false);
 	}
 
 	private void _preloadInterstitialAd(String location) {

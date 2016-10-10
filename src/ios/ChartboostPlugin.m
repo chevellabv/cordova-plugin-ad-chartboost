@@ -165,7 +165,6 @@ static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b
 	self.appId = appId;
 	self.appSignature = appSignature;
 	[Chartboost startWithAppId:self.appId appSignature:self.appSignature delegate:self];
-	[Chartboost setAutoCacheAds:NO];
 }
 
 -(void) _preloadInterstitialAd:(NSString *)location {
