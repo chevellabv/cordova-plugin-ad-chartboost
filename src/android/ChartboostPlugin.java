@@ -581,6 +581,23 @@ public class ChartboostPlugin extends CordovaPlugin {
 			//pr.setKeepCallback(true);
 			//callbackContextKeepCallback.sendPluginResult(pr);			
 		}
+
+		@Override 
+		public void didInitialize(boolean status) {
+			Log.d(LOG_TAG, "didInitialize: "+ (status == true ? "success" : "failure") );
+
+			JSONObject result = new JSONObject();
+			try {
+				result.put("event", "didInitialize");
+				result.put("status", status);
+			}
+			catch(JSONException ex){
+			}			
+			//PluginResult pr = new PluginResult(PluginResult.Status.OK, "onMoreAppsAdShown");
+			PluginResult pr = new PluginResult(PluginResult.Status.OK, result);
+			pr.setKeepCallback(true);
+			callbackContextKeepCallback.sendPluginResult(pr);
+		}
 			
 		@Override
 		public void didClickMoreApps(String location) {

@@ -25,7 +25,13 @@ module.exports = {
 					var event = result["event"];
 					var location = result["message"];	
 					var error = result["error"];				
-					if (event == "onInterstitialAdPreloaded") {					
+					var status = result["status"];
+					if (event == "didInitialize") {
+						if (self.onInitialize) {
+							self.onInitialize(status);
+						}
+					}				
+					else if (event == "onInterstitialAdPreloaded") {					
 						if (self.onFullScreenAdPreloaded)
 							self.onFullScreenAdPreloaded(location);			
 						if (self.onInterstitialAdPreloaded)
@@ -255,5 +261,7 @@ module.exports = {
 	onRewardedVideoAdLoaded: null,
 	onRewardedVideoAdShown: null,
 	onRewardedVideoAdHidden: null,
-	onRewardedVideoAdCompleted: null
+	onRewardedVideoAdCompleted: null,
+
+	onInitialize: null
 };
