@@ -583,13 +583,13 @@ public class ChartboostPlugin extends CordovaPlugin {
 		}
 
 		@Override 
-		public void didInitialize(boolean status) {
-			Log.d(LOG_TAG, "didInitialize: "+ (status == true ? "success" : "failure") );
+		public void didInitialize() {
+			Log.d(LOG_TAG, "didInitialize");
 
 			JSONObject result = new JSONObject();
 			try {
 				result.put("event", "didInitialize");
-				result.put("status", status);
+				result.put("status", true);
 			}
 			catch(JSONException ex){
 			}			
