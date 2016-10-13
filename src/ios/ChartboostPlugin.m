@@ -435,7 +435,7 @@ static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b
 	
 	NSDictionary* result = @{
 		@"event":@"didInitialize",
-		@"status":status
+		@"status": [NSNumber numberWithBool:status]
 	};	
 	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
 	[pr setKeepCallbackAsBool:YES];
