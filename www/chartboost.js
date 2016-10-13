@@ -25,7 +25,7 @@ module.exports = {
 					var event = result["event"];
 					var location = result["message"];	
 					var error = result["error"];				
-					var status = result["status"];
+					var status = !!result["status"];
 					if (event == "didInitialize") {
 						if (self.onInitialize) {
 							self.onInitialize(status);
