@@ -199,6 +199,7 @@ static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b
 
 -(void) _showRewardedVideoAd:(NSString *)location {
 	self.rewardedVideoAdPreload = NO;
+	[Chartboost cacheRewardedVideo:location];
 	[Chartboost showRewardedVideo:location];
 }
 
