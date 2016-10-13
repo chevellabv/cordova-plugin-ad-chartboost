@@ -430,6 +430,18 @@ static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b
 	//[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
 }
 
+- (void)didInitialize:(BOOL)status {
+	NSLog(@"%@", @"didInitialize");
+	
+	NSDictionary* result = @{
+		@"event":@"didInitialize",
+		@"status":status
+	};	
+	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+	[pr setKeepCallbackAsBool:YES];
+	[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
+}
+
 - (void) didClickMoreApps:(CBLocation)location {
 	NSLog(@"%@", @"didClickMoreApps");
 }
