@@ -352,12 +352,14 @@ public class ChartboostPlugin extends CordovaPlugin {
 				
 		Chartboost.startWithAppId(cordova.getActivity(), this.appId , this.appSignature);
 		Chartboost.setShouldPrefetchVideoContent(false);
-				Chartboost.cacheRewardedVideo("Default");	
+
 
 		Chartboost.setLoggingLevel(Level.ALL);		
 		Chartboost.onCreate(cordova.getActivity());
 		Chartboost.onStart(cordova.getActivity());
 		Chartboost.setDelegate(new MyChartboostDelegate());
+
+		Chartboost.cacheRewardedVideo("Default");
 	}
 
 	private void _preloadInterstitialAd(String location) {
