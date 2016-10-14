@@ -359,7 +359,7 @@ public class ChartboostPlugin extends CordovaPlugin {
 		Chartboost.onStart(cordova.getActivity());
 		Chartboost.setDelegate(new MyChartboostDelegate());
 
-		Chartboost.cacheRewardedVideo("Default");
+		// Chartboost.cacheRewardedVideo("Default");
 	}
 
 	private void _preloadInterstitialAd(String location) {
