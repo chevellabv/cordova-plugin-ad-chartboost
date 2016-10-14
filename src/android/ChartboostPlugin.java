@@ -392,7 +392,8 @@ public class ChartboostPlugin extends CordovaPlugin {
 		if (Chartboost.hasRewardedVideo(location)) {
 			Chartboost.showRewardedVideo(location);
 		} else {
-			JSONObject result = new JSONObject();
+			   	Chartboost.cacheRewardedVideo(location);
+				JSONObject result = new JSONObject();
 				try {
 					result.put("event", "hasNoRewardVideo");
 					result.put("message", location);
@@ -402,9 +403,10 @@ public class ChartboostPlugin extends CordovaPlugin {
     			PluginResult pr = new PluginResult(PluginResult.Status.OK, result);
     			pr.setKeepCallback(true);
     			callbackContextKeepCallback.sendPluginResult(pr);
+
 		}
 
-		Chartboost.cacheRewardedVideo(location);
+		
 	}
 	
 	class MyChartboostDelegate extends ChartboostDelegate {
