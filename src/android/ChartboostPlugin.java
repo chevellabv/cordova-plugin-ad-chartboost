@@ -351,9 +351,7 @@ public class ChartboostPlugin extends CordovaPlugin {
 		this.appSignature = appSignature;
 				
 		Chartboost.startWithAppId(cordova.getActivity(), this.appId , this.appSignature);
-		Chartboost.setShouldPrefetchVideoContent(false);
-
-
+		// Chartboost.setShouldPrefetchVideoContent(false);
 		Chartboost.setLoggingLevel(Level.ALL);		
 		Chartboost.onCreate(cordova.getActivity());
 		Chartboost.onStart(cordova.getActivity());
@@ -394,24 +392,23 @@ public class ChartboostPlugin extends CordovaPlugin {
 
 	private void _showRewardedVideoAd(String location) {
 		rewardedVideoAdPreload = false;
-		if (Chartboost.hasRewardedVideo(location)) {
-			Chartboost.showRewardedVideo(location);
-		} else {
-			   	Chartboost.cacheRewardedVideo(location);
-				JSONObject result = new JSONObject();
-				try {
-					result.put("event", "hasNoRewardVideo");
-					result.put("message", location);
-				}
-				catch(JSONException ex){
-				}		
-    			PluginResult pr = new PluginResult(PluginResult.Status.OK, result);
-    			pr.setKeepCallback(true);
-    			callbackContextKeepCallback.sendPluginResult(pr);
+		if (Chartboost.hasRewardedVideo(location) == false) {
+			JSONObject result = new JSONObject();
+			try {
+				result.put("event", "hasNoRewardVideo");
+				result.put("message", location);
+			}
+			catch(JSONException ex){
+			}		
+			PluginResult pr = new PluginResult(PluginResult.Status.OK, result);
+			pr.setKeepCallback(true);
+			callbackContextKeepCallback.sendPluginResult(pr);
 
+		} else {
+			Chartboost.showRewardedVideo(location);
 		}
 
-		
+		Chartboost.cacheRewardedVideo(location);
 	}
 	
 	class MyChartboostDelegate extends ChartboostDelegate {
