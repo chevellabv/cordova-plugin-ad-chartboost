@@ -132,7 +132,11 @@ module.exports = {
 					else if (event == "onRewardedVideoAdCompleted") {
 						if (self.onRewardedVideoAdCompleted)
 							self.onRewardedVideoAdCompleted(location);
-					}					
+					}	
+					else if (event === "hasNoRewardVideo")	{
+						if (self.onHasNoRewardVideo)
+							self.onHasNoRewardVideo(location);
+					}			
 				}
 			},
 			function (error) {
@@ -267,5 +271,6 @@ module.exports = {
 	onRewardedVideoAdHidden: null,
 	onRewardedVideoAdCompleted: null,
 	onWillDisplayVideo: null,
+	onHasNoRewardVideo: null,
 	onInitialize: null
 };
