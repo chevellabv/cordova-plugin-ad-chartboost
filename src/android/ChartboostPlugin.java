@@ -776,11 +776,20 @@ public class ChartboostPlugin extends CordovaPlugin {
 			//pr.setKeepCallback(true);
 			//callbackContextKeepCallback.sendPluginResult(pr);				
 		}
-
 		//----------------------
 		@Override
 		public void willDisplayVideo(String location) {
 			Log.d(LOG_TAG, "willDisplayVideo: " + (location != null ? location : "null"));
+			JSONObject result = new JSONObject();
+			try {
+				result.put("event", "onWillDisplayVideo");
+				result.put("message", location);
+			}
+			catch(JSONException ex){
+			}			
+			PluginResult pr = new PluginResult(PluginResult.Status.OK, result);
+			pr.setKeepCallback(true);
+			callbackContextKeepCallback.sendPluginResult(pr);
 		}			
 	};	
 }

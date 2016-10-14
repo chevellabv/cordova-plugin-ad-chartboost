@@ -674,7 +674,15 @@ static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b
 #pragma mark - Video Delegate
 
 - (void) willDisplayVideo:(CBLocation)location {
-	NSLog(@"%@", @"willDisplayVideo");
+	NSLog(@"%@", @"onWillDisplayVideo");
+	NSDictionary* result = @{
+		@"event":@"onWillDisplayVideo",
+		@"message":location
+	};	
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onRewardedVideoAdCompleted"];
+	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+	[pr setKeepCallbackAsBool:YES];
+	[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
 }
 
 //-----------------------------------------

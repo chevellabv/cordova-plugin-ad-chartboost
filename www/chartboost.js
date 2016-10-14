@@ -94,6 +94,10 @@ module.exports = {
 						if (self.onRewardedVideoAdPreloaded)
 							self.onRewardedVideoAdPreloaded(location);
 					}
+					else if (event == "onWillDisplayVideo") {
+						if (self.onWillDisplayVideo)
+							self.onWillDisplayVideo(location);
+					}
 					else if (event == "onRewardedVideoAdLoaded") {
 						self._loadedRewardedVideoAd = true;
 
@@ -262,6 +266,6 @@ module.exports = {
 	onRewardedVideoAdShown: null,
 	onRewardedVideoAdHidden: null,
 	onRewardedVideoAdCompleted: null,
-
+	onWillDisplayVideo: null,
 	onInitialize: null
 };
