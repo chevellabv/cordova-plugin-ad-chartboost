@@ -696,7 +696,7 @@ public class ChartboostPlugin extends CordovaPlugin {
 		public void didFailToLoadRewardedVideo(String location,	CBImpressionError error) {
 			Log.d(LOG_TAG, "didFailToLoadRewardedVideo: " + (location != null ? location : "null")+ ", "+ error.name());			
 		
-	
+			rewardedVideoAdPreloading = false;
 			JSONObject result = new JSONObject();
 			try {
 				result.put("event", "onRewardedVideoAdFailedToLoad");
