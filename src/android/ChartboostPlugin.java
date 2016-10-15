@@ -412,6 +412,8 @@ public class ChartboostPlugin extends CordovaPlugin {
 
 		} else {
 			Chartboost.showRewardedVideo(location);
+			_preloadRewardedVideoAd(location);
+
 		}
 
 		
