@@ -96,6 +96,7 @@ public class ChartboostPlugin extends CordovaPlugin {
 	protected boolean interstitialAdPreload;
 	protected boolean moreAppsAdPreload;
 	protected boolean rewardedVideoAdPreload;
+	protected boolean rewardedVideoAdPreloading = false;
 	
     @Override
 	public void pluginInitialize() {
@@ -385,15 +386,19 @@ public class ChartboostPlugin extends CordovaPlugin {
 	}
 
 	private void _preloadRewardedVideoAd(String location) {
-		rewardedVideoAdPreload = true;
+		if (rewardedVideoAdPreloading == false) {
+			rewardedVideoAdPreloading = true;
+			rewardedVideoAdPreload = true;
 		
-		Chartboost.cacheRewardedVideo(location);	
+			Chartboost.cacheRewardedVideo(location);
+		}	
 	}
 
 	private void _showRewardedVideoAd(String location) {
 		rewardedVideoAdPreload = false;
 		if (Chartboost.hasRewardedVideo(location) == false) {
 			// Chartboost.cacheRewardedVideo(location);
+			_preloadRewardedVideoAd(location);
 			JSONObject result = new JSONObject();
 			try {
 				result.put("event", "hasNoRewardVideo");
@@ -651,6 +656,7 @@ public class ChartboostPlugin extends CordovaPlugin {
 		//------------------------		
 		@Override
 		public void didCacheRewardedVideo(String location) {
+			rewardedVideoAdPreloading = false;
 			Log.d(LOG_TAG, "didCacheRewardedVideo: "+  (location != null ? location : "null"));
 					
     		if (rewardedVideoAdPreload) {
